@@ -1,0 +1,101 @@
+I problemi che io e altri abbiamo riscontrato e spero che questo file ti possa aiutare
+per chi preparerà l'esame prossimamente
+
+1) Il problema di cambiare schermata: Come passare da una schermata ad un' altra? 
+    Durante le lezioni di laboratorio non abbiamo mai dovuto cambiare schermata ma 
+    abbiamo sempre lavorato su un unico JFrame con all' interno più di un pannello, 
+    ma la schermata era sempre la stessa, come posso cambiare schermata alla pressione di un 
+    pulsante quindi? 
+        Io ho scitto un metodo nella classe MyFrame (ogni classe nel package GUI estende MyFrame) 
+        per passare dalla schermata attuale ad un' altra schermata
+        
+    /****************************************************************/
+        public void CambiaSchermata(MyFrame f1, MyFrame f2) {
+            f2.setVisible(false);
+            f2.dispose();
+
+            f1.setVisible(true);
+            f1.pack();
+            f1.setLocationRelativeTo(null);
+    }
+    /****************************************************************/
+    Con questo metodo rendo visibile il MyFrame f1 e distruggo il MyFrame f2
+    Questo metodo viene chiamato sempre nel metodo     
+    public void actionPerformed(ActionEvent e) 
+    e in base al pulsante premuto creo una nuova schermata e con questo metodo vado nella nuova schermata 
+
+    
+    
+    
+2) Il "problema" di passare parametri da una classe ad un' altra: Se in una classe "A" ho dei dati, e nel cambio di schermata 
+    (e quindi di classe) mi servono gli stessi dati (ad esempio nel mio caso una lista di utenti letta da un file), 
+    non posso rilggere  la lista da file in ogni schermata (sprecherei troppa memoria e troppo tempo).
+    Quindi come ovviare a questo problema? 
+        Io Ho usato il metodo costruttore della classe che creavo per passare gli oggetti che mi servivano
+        
+        Ad esempio: Nella classe FrameIniziale (il primo frame dell' app in cui si sceglie cosa fare)
+        leggo una lista di utenti con le relative spedizioni da un file di testo. Creo un variabile di classe 
+        private ListaUtenti l. Quello che leggo da file lo metto in questa lista di utenti. Nelle schermate successive
+        ritilizzo questa lista di utenti, passandola con il metodo costruttore, e nelle classi che creo c'è sempre una
+        variabile ListaUtenti alla quale associo quella che passo con il costruttore 
+        
+        
+       /******************************************************************/
+       if (Scelta.equals("Accesso")){
+           CambiaSchermata(new FrameLogin(l), this);
+       }
+
+       if (Scelta.equals("Registazione")){
+           CambiaSchermata(new FrameRegistrazione(l), this);
+       }
+
+        if (Scelta.equals("Admin")){
+            CambiaSchermata(new FrameLogin(l, true), this);
+        }
+        /******************************************************************/
+        FrameLogil (ListaUtenti l)  ==> stessa lista di utenti che leggo nel primo frame, 
+        passo un "riferimento" alla lista di utenti, senza ricopiare nulla (costo O(1))
+  
+  
+  
+3) IL POLIMORFISMO: questo è probabilmente il punto più critico. La prima volta che ho presentato il progetto mi era stato 
+    proposto 24 per un unso incorretto del polimorfismo, all' interno di questa cartella c' è un file "polimorfismo.txt" in cui
+    spiego nel dettaglio dove ho usato il polimorfismo, e pezzi di codice commentato che era il "uso scorretto anzi non uso del polimorfismo".
+    Per polimorfismo si intende "SOLO A RUNTIME VIENE DECISO QUALE METODO USO" e per fare cio:
+    
+    Ho una classe A e una classe B che estende A (eredita tutti i metodi e gli attributi), nella classe A
+    scrivo un metodo, nella classe B faccio @Override del metodo, e quindi i due oggetti si comportano in modo diverso
+    Solo a RUNTIME sarà deciso in base all' oggetto quale metodo usare ASSOLUTAMENTE VIETATO l' uso di 
+    "if (oggetto instanceof qualcosa)
+        code
+    else
+        code
+    "
+    
+    per vedere nel dettaglio leggere il file polimorfismo.txt
+    
+    
+4) Compilare da linea di comando: in pochi hanno avuto questo problema, ma lo metto in ogni caso:
+    Durante la presentazione del progetto, viene richiesto di compilare ed eseguire il progetto non dal mitico eclipse
+    o intellij ma da linea di comando. Per compilare ed eseguire il mio progetto andate con il terminale della directory src
+    
+    .   javac start/StartApp.java
+    .   java start/StartApp
+    
+    in generale, non recatevi fin dentro alla cartella con il main se il progetto è diviso in package, ma fermatevi alla cartella
+    src in cui sono contenuti tutti i package e compilate da li entrando nella cartella e nel file del main usando / 
+    (a qualcuno aveva dato problemi)
+    
+    Altro consiglio, usate la stessa versione di java del vostro IDE, se avete una versione di java piu recente, compilando da command line
+    userete la piu recente e potrebbe avere delle balle o degli errori inesistenti
+    Ultimo consiglio per questo punto, io ho usato sempre linux, e per compilare ed eseguire non ho mai avuto un mezzo problema
+    
+
+5) Questa non è tanto la risoluzione di un problema ma un consiglio, tutte le variabili vanno dichiarate private e scritti in caso dei metodi
+    getter e setter, l' incapsulamento è uno dei punti principali della programmazione ad oggetti e quando qualcuno ha usato varibili 
+    protected o public gli è sempre stato fatto notare
+
+
+6) Ultimo consiglio, non scoraggiatevi quando non sapete fare qualcosa, è normale, cercate online e chiedete aiuto, in bocca al lupo :) 
+
+        

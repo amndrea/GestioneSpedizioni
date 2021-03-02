@@ -1,0 +1,22 @@
+Ho usato il polimorfismo:
+   1) Nella classe ListaUtenti, nel metodo SalvaLista, per salvare su file i dati relativi alle spedizioni uso 
+	il metodo toString() delle varie spedizioni contenute nell' ArrayList di spedizioni 
+	dell' utente che può contenere sia spedizioni normali sia spedizioni assicurate, quindi solo
+	a runtime verrà deciso quale dei due metodi usare per scrivere su file.
+
+   2) Nella classe FrameTabella, (quando sono loggto come utente) posso richiedere il rimborso delle spedizioni
+	assicurate in stato fallito, per controllare se posso richiedere il rimborso per una spedizione, ho due 
+	metodi, uno nella classe Spedizione, che ritorna false perche non posso richiedere il rimborso di una spedizione
+	normale, e lo stesso metodo di cui ho fatto Override nella classe SpedizioneSicura che controlla lo stato, anche qui solo a runtime so quale metodo 
+	verra chiamato in base alle spedizioni contenute nell' ArrayList di spedizioni.
+   
+   3) Nella classe FrameTabella, (quando sono loggato come admin) posso rimuovere le spedizioni in stato finale, e per
+	controllare quando una spedizione è in stato finale ho due metodi, uno nella classe Spedizione che controlla le condizioni
+	di una spedizione normale per essere in stato finale, e lo stesso metodo di cui ho fatto Override
+	nella classe SpedizioneSicura che controlla le condizioni di una spedizione assicurata per essere in stato finale.
+	Dato che nell' ArrayList di spedizioni su cui lavora l'admin possono essere presenti sia spedizioni normali sia
+	assicurate, solo a runtime viene deciso quale metodo viene utilizzato.
+
+   4)Nella classe SpedizioniTableModel, nel metodo getValueAt, posso ritornale il valore assicurato di una spedizione, per fare cio uso
+	il metodo getValoreAssicurato definito nella classe Spedizione di cui ho fatto Override nella classe SpedizioneSicura, quindi solo
+	a runtime viene deciso quale dei due metodi usare
